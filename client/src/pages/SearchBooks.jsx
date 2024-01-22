@@ -8,9 +8,9 @@ import {
   Row
 } from 'react-bootstrap';
 
-import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import Auth from '../src/utils/auth';
+import { saveBook, searchGoogleBooks } from '../src/utils/API';
+import { saveBookIds, getSavedBookIds } from '../src/utils/localStorage';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
