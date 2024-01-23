@@ -1,16 +1,28 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-
-import { createUser } from '../utils/API';
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from 'queries and mutation files';
 import Auth from '../utils/auth';
 
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+
+// Use useMutation hook to execute the ADD_USER mutation
+const [addUserMutation, { error }] = useMutation(ADD_USER, {
+  onCompleted: (data) => {
+    const { token, user } = data.addUser;
+    Auth.login(token);
+  },
+  onError: (error) => {
+    console.error(error);
+    setShowAlert(true);
+  },
+});
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -27,27 +39,36 @@ const SignupForm = () => {
       event.stopPropagation();
     }
 
+    setValidated(true);
+
     try {
-      const response = await createUser(userFormData);
+      await addUserMutation({
+        variables: { ...userFormData },
+      });
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+    //   const response = await createUser(userFormData);
 
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
+    //   if (!response.ok) {
+    //     throw new Error('something went wrong!');
+    //   }
+
+    //   const { token, user } = await response.json();
+    //   console.log(user);
+    //   Auth.login(token);
+    // } catch (err) {
+    //   console.error(err);
+    //   setShowAlert(true);
+    // }
 
     setUserFormData({
       username: '',
       email: '',
       password: '',
     });
-  };
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <>
