@@ -9,10 +9,10 @@ import {
   Row
 } from 'react-bootstrap';
 
-import Auth from '../src/utils/auth';
-import { SAVE_BOOK } from 'mutations.js';
-import { searchGoogleBooks } from '../src/utils/API';
-import { saveBookIds, getSavedBookIds } from '../src/utils/localStorage';
+import Auth from '../utils/auth';
+import { SAVE_BOOK } from '../utils/mutations.js';
+import { searchGoogleBooks } from '../utils/API';
+import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -33,7 +33,8 @@ const SearchBooks = () => {
     onError: (error) => {
       console.error(error);
     },
-  }),
+  })
+
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();

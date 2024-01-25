@@ -8,9 +8,10 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { GET_ME, REMOVE_BOOK } from 'queries and mutations files';
-import Auth from '../src/utils/auth';
-import { removeBookId } from '../src/utils/localStorage';
+import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
+import Auth from '../utils/auth';
+import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   const { loading, error, data } = useQuery(GET_ME);
@@ -113,7 +114,6 @@ const SavedBooks = () => {
 p          {userData.savedBooks.length
             ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
-        </h2>
         <Row>
           {userData.savedBooks.map((book) => {
             return (
