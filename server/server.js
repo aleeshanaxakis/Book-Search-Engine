@@ -31,5 +31,9 @@ if (process.env.NODE_ENV === 'production') {
 app.use(routes);
 
 db.once('open', () => {
-  app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+  app.listen(PORT, () => 
+  console.log(`🌍 Now listening on localhost:${PORT}`));
+  console.log(`Use GraphQL at http://locahost:${PORT}/graphql`);
 });
+
+startApolloServer();
