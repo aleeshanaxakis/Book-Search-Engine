@@ -1,5 +1,3 @@
-import React from 'react';
-import { useQuery, useMutation } from '@apollo/client';
 import {
   Container,
   Card,
@@ -7,21 +5,25 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const { loading, error, data } = useQuery(GET_ME);
+  const { loading, error, data } = useQuery(GET_ME {
+    pollInterval: 100,
+  });
+
   const userData = data?.me || {};
 
   // Use useMutation hook to execute the REMOVE_BOOK mutation
-  const [removeBookMutation] = useMutation(REMOVE_BOOK, {
-    onError: (error) => {
-      console.error(error);
-    },
+  const [removeBook, {error}] = useMutation(REMOVE_BOOK, {
+    refetchQueries: [
+      GET_ME,
+      'me'
+    ]
   });
 
   // // use this to determine if `useEffect()` hook needs to run again
@@ -61,15 +63,10 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await removeBookMutation({
-        variables: { bookId: bookId },
+      const { data } = await removeBook({
+        variables: { bookId },
       });
-
-      // Check if the mutation was successful
-      if (data && data.removeBook) {
-        // Remove the book ID from localStorage
-        removeBookId(bookId);
-      }
+      removeBookId(bookId); 
     } catch (err) {
       console.error(err);
     }
@@ -79,10 +76,6 @@ const SavedBooks = () => {
     return <h2>Loading...</h2>;
   }
 
-  if (error) {
-    console.error(error);
-    return <h2>Error loading books</h2>;
-  }
   //     const response = await deleteBook(bookId, token);
 
   //     if (!response.ok) {
