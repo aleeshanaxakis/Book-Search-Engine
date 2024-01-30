@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { SAVE_BOOK } from '../utils/mutations.js';
+import { SAVE_BOOK } from '../utils/mutations';
 import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
@@ -77,7 +77,7 @@ const SearchBooks = () => {
 
     try {
       await saveBook({
-        varirables: { input: bookToSave },
+        variables: { input: bookToSave },
       });
 
     setSavedBookIds([...savedBookIds, bookToSave.bookId]);
