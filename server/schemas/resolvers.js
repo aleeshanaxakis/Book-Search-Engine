@@ -11,7 +11,7 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-  }.
+  },
 
   Mutation: {
     // Create a user, sign a token, and send it back
@@ -52,7 +52,7 @@ const resolvers = {
       throw AuthenticationError;
 
     }, 
-      removeBook: async ( parent, { bookId } context) => {
+      removeBook: async ( parent, { bookId }, context) => {
         if (context.user) {
           return User.findOneAndUpdate(
             {_id: context.user.id},
