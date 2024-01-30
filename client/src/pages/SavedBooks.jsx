@@ -12,14 +12,14 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const { loading, error, data } = useQuery(GET_ME {
+  const { loading, data } = useQuery(GET_ME, {
     pollInterval: 100,
   });
 
   const userData = data?.me || {};
 
   // Use useMutation hook to execute the REMOVE_BOOK mutation
-  const [removeBook, {error}] = useMutation(REMOVE_BOOK, {
+  const [removeBook, ] = useMutation(REMOVE_BOOK, {
     refetchQueries: [
       GET_ME,
       'me'

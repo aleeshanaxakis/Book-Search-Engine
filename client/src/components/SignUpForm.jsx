@@ -59,6 +59,7 @@ const SignupForm = () => {
       email: '',
       password: '',
     });
+  };
 
   return (
     <>
@@ -117,5 +118,4 @@ const SignupForm = () => {
     </>
   );
 };
-
 export default SignupForm;
